@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MediaForge</title>
+  <style>
+    :root {
+      --bg: #0e0e14;
+      --panel: rgba(27, 27, 33, 0.48);
+      --panel-strong: rgba(31, 31, 39, 0.72);
+      --line: rgba(255, 255, 255, 0.12);
+      --text: #f3f0ff;
+      --muted: #aaa4bb;
+      --purple: #7c5cfc;
+      --pink: #fc5c7d;
+      --teal: #4ecca3;
+      --warn: #fcbe5c;
+      --err: #ff6961;
+      --shadow: 0 40px 60px rgba(0, 0, 0, 0.34), inset 0 1px rgba(255, 255, 255, 0.1);
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(124, 92, 252, 0.17), transparent 34%),
+        radial-gradient(circle at 82% 72%, rgba(252, 92, 125, 0.14), transparent 34%),
+        radial-gradient(circle at 44% 82%, rgba(78, 204, 163, 0.09), transparent 28%),
+        var(--bg);
+      overflow: hidden;
+    }
+
+    button, select, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .app {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      height: 100vh;
+    }
+
+    .glass {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    .sidebar {
+      padding: 28px 22px;
+      border-right: 1px solid var(--line);
+      background: rgba(16, 16, 24, 0.62);
+      backdrop-filter: blur(30px);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: -0.04em;
+      color: #d9ceff;
+    }
+
+    .brand p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font: 12px Consolas, monospace;
+      letter-spacing: 0.08em;
+    }
+
+    .tab {
+      width: 100%;
+      border: 0;
+      border-left: 4px solid transparent;
+      border-radius: 12px;
+      color: var(--muted);
+      background: transparent;
+      padding: 14px 16px;
+      text-align: left;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      transition: 160ms ease;
+      font-weight: 700;
+    }
+
+    .tab:hover { background: rgba(255, 255, 255, 0.055); color: var(--text); }
+    .tab.active {
+      background: rgba(202, 190, 255, 0.16);
+      border-left-color: currentColor;
+      color: #d7ccff;
+    }
+
+    .sidebar-footer { margin-top: auto; display: grid; gap: 12px; }
+
+    .main {
+      padding: 34px;
+      overflow: auto;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 26px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 38px;
+      letter-spacing: -0.04em;
+    }
+
+    .subtitle { color: var(--muted); margin: 8px 0 0; font-size: 15px; }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 999px;
+      padding: 10px 14px;
+      color: var(--teal);
+      background: rgba(78, 204, 163, 0.1);
+      border: 1px solid rgba(78, 204, 163, 0.22);
+      font: 12px Consolas, monospace;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 16px currentColor;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 360px minmax(420px, 1fr);
+      gap: 28px;
+    }
+
+    .card {
+      border-radius: 24px;
+      padding: 24px;
+      min-width: 0;
+    }
+
+    .card-title {
+      margin: 0 0 20px;
+      color: #dfd6ff;
+      font: 700 13px Consolas, monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    label {
+      display: block;
+      color: var(--muted);
+      font: 12px Consolas, monospace;
+      margin: 18px 0 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .field, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 13px;
+      background: rgba(10, 10, 18, 0.54);
+      color: var(--text);
+      outline: none;
+    }
+
+    .field:focus, select:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.18);
+    }
+
+    .custom-select {
+      position: relative;
+      width: 100%;
+    }
+
+    .select-button {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 42px 12px 13px;
+      background: rgba(10, 10, 18, 0.54);
+      color: var(--text);
+      text-align: left;
+      outline: none;
+      position: relative;
+    }
+
+    .select-button::after {
+      content: "v";
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font: 700 12px Consolas, monospace;
+    }
+
+    .select-button:focus,
+    .custom-select.open .select-button {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.18);
+    }
+
+    .select-menu {
+      display: none;
+      position: absolute;
+      z-index: 30;
+      left: 0;
+      right: 0;
+      top: calc(100% + 8px);
+      max-height: 240px;
+      overflow: auto;
+      padding: 6px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(16, 16, 24, 0.96);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    .custom-select.open .select-menu { display: block; }
+
+    .select-option {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 11px;
+      color: var(--text);
+      background: transparent;
+      text-align: left;
+      font: 13px Consolas, monospace;
+    }
+
+    .select-option:hover,
+    .select-option.active {
+      background: rgba(124, 92, 252, 0.22);
+      color: #ffffff;
+    }
+
+    .row { display: flex; gap: 10px; align-items: center; }
+    .row .field { flex: 1; min-width: 0; }
+
+    .btn {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 15px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.06);
+      transition: 160ms ease;
+      font-weight: 700;
+    }
+
+    .btn:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.1); }
+    .primary {
+      width: 100%;
+      border: 0;
+      margin-top: 22px;
+      padding: 15px 18px;
+      border-radius: 14px;
+      color: white;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      box-shadow: 0 18px 30px rgba(124, 92, 252, 0.24);
+    }
+
+    .primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .drop {
+      min-height: 430px;
+      border-radius: 24px;
+      border: 2px dashed rgba(255, 255, 255, 0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      background: rgba(12, 12, 19, 0.45);
+    }
+
+    .drop::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background: radial-gradient(circle at 55% 55%, rgba(124, 92, 252, 0.18), transparent 32%);
+      pointer-events: none;
+    }
+
+    .drop.dragover {
+      border-color: currentColor;
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .drop-inner { position: relative; max-width: 520px; }
+    .drop-icon {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 22px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--line);
+      font-size: 44px;
+    }
+
+    .drop h3 { margin: 0 0 10px; font-size: 26px; }
+    .drop p { margin: 0; color: var(--muted); line-height: 1.5; }
+
+    .queue {
+      margin-top: 28px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .queue-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font: 12px Consolas, monospace;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .files { max-height: 160px; overflow: auto; }
+    .file {
+      padding: 11px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      color: #d9d5e6;
+      font: 12px Consolas, monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .progress-wrap {
+      height: 11px;
+      border-radius: 999px;
+      margin-top: 20px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .progress {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--purple), var(--pink), var(--teal));
+      transition: width 220ms ease;
+    }
+
+    .console {
+      margin-top: 28px;
+      border-radius: 20px;
+      min-height: 150px;
+      overflow: hidden;
+    }
+
+    .console-head {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--line);
+      font: 12px Consolas, monospace;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .logs {
+      height: 150px;
+      overflow: auto;
+      padding: 14px 16px;
+      font: 12px Consolas, monospace;
+      color: var(--muted);
+      background: rgba(4, 4, 9, 0.36);
+    }
+
+    .ok { color: var(--teal); }
+    .err { color: var(--err); }
+    .warn { color: var(--warn); }
+
+    @media (max-width: 980px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { position: sticky; top: 0; z-index: 2; flex-direction: row; align-items: center; padding: 16px; }
+      .nav { display: flex; gap: 8px; }
+      .sidebar-footer { display: none; }
+      .tab { padding: 10px 12px; border-left: 0; border-bottom: 3px solid transparent; }
+      .grid { grid-template-columns: 1fr; }
+      .main { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <h1>MediaForge</h1>
+        <p>LIQUID DESKTOP</p>
+      </div>
+      <div class="nav">
+        <button class="tab active" data-cat="AUDIO"><span>||</span> Audio</button>
+        <button class="tab" data-cat="VIDEO"><span>></span> Video</button>
+        <button class="tab" data-cat="IMAGE"><span>[]</span> Image</button>
+      </div>
+      <div class="sidebar-footer">
+        <button class="btn" id="clearBtn">Clear Queue</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="top">
+        <div>
+          <h2 id="heading">Audio Conversion</h2>
+          <p class="subtitle" id="subtitle">Configure output settings and add source files.</p>
+        </div>
+        <div class="status" id="ffmpegStatus"><span class="dot"></span><span>Checking FFmpeg...</span></div>
+      </section>
+
+      <section class="grid">
+        <section class="card glass">
+          <p class="card-title">Output Configuration</p>
+          <label for="formatSelect">Target Format</label>
+          <div class="custom-select" id="formatBox">
+            <button class="select-button" id="formatButton" type="button">Loading formats...</button>
+            <div class="select-menu" id="formatMenu"></div>
+          </div>
+          <input type="hidden" id="formatSelect">
+
+          <div id="qualityBlock">
+            <label for="qualitySelect">Audio Quality</label>
+            <div class="custom-select" id="qualityBox">
+              <button class="select-button" id="qualityButton" type="button">Loading quality...</button>
+              <div class="select-menu" id="qualityMenu"></div>
+            </div>
+            <input type="hidden" id="qualitySelect">
+          </div>
+
+          <label for="outputFolder">Destination Path</label>
+          <div class="row">
+            <input class="field" id="outputFolder" readonly placeholder="Choose output folder">
+            <button class="btn" id="folderBtn">Browse</button>
+          </div>
+
+          <label class="check">
+            <input type="checkbox" id="sameFolder">
+            Save next to source files
+          </label>
+
+          <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+          <button class="btn primary" id="convertBtn">Start Conversion</button>
+        </section>
+
+        <section>
+          <div class="drop glass" id="dropZone">
+            <div class="drop-inner">
+              <div class="drop-icon" id="dropIcon">♪</div>
+              <h3 id="dropTitle">Add Audio Files</h3>
+              <p id="dropHelp">Drop files or folders here, or use the browse buttons.</p>
+              <div class="row" style="justify-content:center;margin-top:22px;flex-wrap:wrap">
+                <button class="btn" id="browseBtn">Browse Files</button>
+                <button class="btn" id="browseFolderBtn">Browse Folder</button>
+                <button class="btn" id="pastePathsBtn">Paste Paths</button>
+              </div>
+            </div>
+          </div>
+
+          <section class="queue glass">
+            <div class="queue-head"><span>Queue</span><span id="queueCount">0 files</span></div>
+            <div class="files" id="files"></div>
+          </section>
+        </section>
+      </section>
+
+      <section class="console glass">
+        <div class="console-head"><span>Forge Console</span><span id="runStatus">Ready</span></div>
+        <div class="logs" id="logs"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const state = {
+      category: 'AUDIO',
+      formats: {},
+      audioQualities: [],
+      files: [],
+      running: false,
+      settings: {}
+    };
+
+    const el = id => document.getElementById(id);
+    const api = () => window.pywebview.api;
+
+    const categoryMeta = {
+      AUDIO: { title: 'Audio Conversion', icon: '♪', color: '#7c5cfc', help: 'Add audio files and choose an output codec.' },
+      VIDEO: { title: 'Video Conversion', icon: '>', color: '#fc5c7d', help: 'Add video files for transcoding or audio extraction.' },
+      IMAGE: { title: 'Image Conversion', icon: '[]', color: '#4ecca3', help: 'Add image files including AVIF, HEIC, WEBP, PNG, JPG, and more.' }
+    };
+
+    function log(message, type = 'info') {
+      const div = document.createElement('div');
+      div.className = type;
+      div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      el('logs').appendChild(div);
+      el('logs').scrollTop = el('logs').scrollHeight;
+    }
+
+    function setCategory(category) {
+      state.category = category;
+      if (window.pywebview && window.pywebview.api) {
+        api().set_category(category).catch(() => {});
+      }
+      const meta = categoryMeta[category];
+      document.querySelectorAll('.tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.cat === category);
+        if (btn.dataset.cat === category) btn.style.color = meta.color;
+        else btn.style.color = '';
+      });
+      el('heading').textContent = meta.title;
+      el('subtitle').textContent = meta.help;
+      el('dropIcon').textContent = meta.icon;
+      el('dropIcon').style.color = meta.color;
+      el('dropZone').style.color = meta.color;
+      el('dropTitle').textContent = `Add ${category[0] + category.slice(1).toLowerCase()} Files`;
+      el('qualityBlock').style.display = category === 'AUDIO' ? 'block' : 'none';
+      fillFormats(state.settings.format);
+    }
+
+    function fillFormats(preferred = '') {
+      fillCustomSelect(
+        'format',
+        state.formats[state.category] || [],
+        value => value.replace('->', 'to'),
+        preferred
+      );
+    }
+
+    function fillCustomSelect(prefix, values, labeler = value => value, preferred = '') {
+      const menu = el(`${prefix}Menu`);
+      const button = el(`${prefix}Button`);
+      const hidden = el(`${prefix}Select`);
+      menu.innerHTML = '';
+
+      if (!values.length) {
+        hidden.value = '';
+        button.textContent = 'No options available';
+        return;
+      }
+
+      const selected = values.includes(preferred) ? preferred : values[0];
+      values.forEach(value => {
+        const option = document.createElement('button');
+        option.type = 'button';
+        option.className = `select-option${value === selected ? ' active' : ''}`;
+        option.dataset.value = value;
+        option.textContent = labeler(value);
+        option.addEventListener('click', () => setCustomSelect(prefix, value, labeler(value)));
+        menu.appendChild(option);
+      });
+
+      setCustomSelect(prefix, selected, labeler(selected));
+    }
+
+    function setCustomSelect(prefix, value, label) {
+      el(`${prefix}Select`).value = value;
+      el(`${prefix}Button`).textContent = label;
+      el(`${prefix}Box`).classList.remove('open');
+      el(`${prefix}Menu`).querySelectorAll('.select-option').forEach(option => {
+        option.classList.toggle('active', option.dataset.value === value);
+      });
+    }
+
+    function toggleCustomSelect(prefix) {
+      document.querySelectorAll('.custom-select').forEach(box => {
+        if (box.id !== `${prefix}Box`) box.classList.remove('open');
+      });
+      el(`${prefix}Box`).classList.toggle('open');
+    }
+
+    function renderQueue(files = state.files) {
+      state.files = files || [];
+      el('queueCount').textContent = `${state.files.length} file${state.files.length === 1 ? '' : 's'}`;
+      el('files').innerHTML = '';
+      if (!state.files.length) {
+        const empty = document.createElement('div');
+        empty.className = 'file';
+        empty.textContent = 'No files queued yet.';
+        el('files').appendChild(empty);
+        return;
+      }
+      state.files.forEach(file => {
+        const div = document.createElement('div');
+        div.className = 'file';
+        div.title = file;
+        div.textContent = file;
+        el('files').appendChild(div);
+      });
+    }
+
+    function setProgress(percent) {
+      el('progress').style.width = `${percent || 0}%`;
+    }
+
+    window.MediaForge = {
+      onQueue(payload) {
+        renderQueue(payload.files);
+        if (payload.added) log(`Added ${payload.added} file(s).`, 'ok');
+        if (payload.skipped) log(`Skipped ${payload.skipped} unsupported file(s).`, 'warn');
+        if (payload.duplicates) log(`Skipped ${payload.duplicates} duplicate file(s).`, 'warn');
+        if (payload.wrongCategory) log(`Skipped ${payload.wrongCategory} file(s) from other categories.`, 'warn');
+      },
+      onCategory(payload) {
+        state.settings.format = '';
+        setCategory(payload.category);
+        log(`Switched to ${payload.category} for dropped files.`, 'info');
+      },
+      onStart(payload) {
+        state.running = true;
+        el('convertBtn').disabled = true;
+        el('runStatus').textContent = `Converting 0/${payload.total}`;
+        setProgress(0);
+      },
+      onProgress(payload) {
+        setProgress(payload.percent);
+        el('runStatus').textContent = `Converting ${payload.done}/${payload.total}`;
+      },
+      onLog(payload) {
+        log(payload.message, payload.type);
+      },
+      onFinish(payload) {
+        state.running = false;
+        el('convertBtn').disabled = false;
+        el('runStatus').textContent = `Done: ${payload.success} OK, ${payload.errors} failed`;
+        log(`Finished: ${payload.success} succeeded, ${payload.errors} failed.`, payload.errors ? 'warn' : 'ok');
+      }
+    };
+
+    let initialized = false;
+
+    async function initBridge() {
+      if (initialized) return;
+      if (!window.pywebview || !window.pywebview.api) return;
+      initialized = true;
+      const data = await api().get_state();
+      state.formats = data.formats;
+      state.audioQualities = data.audioQualities;
+      state.settings = data.settings || {};
+      fillCustomSelect('quality', state.audioQualities, value => value, state.settings.quality);
+      el('sameFolder').checked = Boolean(state.settings.sameFolder);
+      el('outputFolder').disabled = el('sameFolder').checked;
+      el('outputFolder').value = el('sameFolder').checked
+        ? '<same as source>'
+        : (state.settings.outputFolder || '');
+      if (data.ffmpegReady && data.ffprobeReady) {
+        el('ffmpegStatus').innerHTML = '<span class="dot"></span><span>FFmpeg Ready</span>';
+      } else {
+        el('ffmpegStatus').classList.add('warn');
+        el('ffmpegStatus').innerHTML = '<span class="dot"></span><span>FFmpeg Missing</span>';
+        log(`FFmpeg path: ${data.ffmpegPath}`, 'err');
+      }
+      setCategory(state.settings.category || 'AUDIO');
+      renderQueue([]);
+      log('Liquid UI connected to MediaForge backend.', 'ok');
+    }
+
+    window.addEventListener('pywebviewready', initBridge);
+    window.addEventListener('DOMContentLoaded', initBridge);
+    const bridgeTimer = setInterval(() => {
+      if (initialized) {
+        clearInterval(bridgeTimer);
+      } else {
+        initBridge();
+      }
+    }, 250);
+
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => setCategory(btn.dataset.cat));
+    });
+
+    el('browseBtn').addEventListener('click', async () => {
+      const result = await api().choose_files(state.category);
+      if (result && result.files) renderQueue(result.files);
+    });
+
+    el('browseFolderBtn').addEventListener('click', async () => {
+      const result = await api().choose_queue_folder(state.category);
+      if (result && result.files) renderQueue(result.files);
+    });
+
+    el('pastePathsBtn').addEventListener('click', async () => {
+      const raw = prompt('Paste one file or folder path per line:');
+      if (!raw) return;
+      const paths = raw
+        .split(/\r?\n/)
+        .map(line => line.trim().replace(/^"|"$/g, ''))
+        .filter(Boolean);
+      if (!paths.length) return;
+      const result = await api().add_files(paths, state.category);
+      if (result && result.files) renderQueue(result.files);
+    });
+
+    el('formatButton').addEventListener('click', () => toggleCustomSelect('format'));
+    el('qualityButton').addEventListener('click', () => toggleCustomSelect('quality'));
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.custom-select')) {
+        document.querySelectorAll('.custom-select').forEach(box => box.classList.remove('open'));
+      }
+    });
+
+    el('folderBtn').addEventListener('click', async () => {
+      const folder = await api().choose_output_folder();
+      if (folder) {
+        el('outputFolder').value = folder;
+        el('sameFolder').checked = false;
+      }
+    });
+
+    el('sameFolder').addEventListener('change', () => {
+      el('outputFolder').disabled = el('sameFolder').checked;
+      if (el('sameFolder').checked) el('outputFolder').value = '<same as source>';
+      else if (el('outputFolder').value === '<same as source>') el('outputFolder').value = '';
+    });
+
+    el('clearBtn').addEventListener('click', async () => {
+      const result = await api().clear_queue();
+      renderQueue(result.files);
+      setProgress(0);
+      log('Queue cleared.', 'info');
+    });
+
+    el('convertBtn').addEventListener('click', async () => {
+      const result = await api().convert({
+        category: state.category,
+        format: el('formatSelect').value,
+        quality: el('qualitySelect').value,
+        outputFolder: el('outputFolder').value === '<same as source>' ? '' : el('outputFolder').value,
+        sameFolder: el('sameFolder').checked
+      });
+      if (!result.ok) log(result.message, 'err');
+      else log(result.message, 'ok');
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      el('dropZone').addEventListener(eventName, event => {
+        event.preventDefault();
+        el('dropZone').classList.add('dragover');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      el('dropZone').addEventListener(eventName, event => {
+        event.preventDefault();
+        el('dropZone').classList.remove('dragover');
+      });
+    });
+
+    el('dropZone').addEventListener('drop', event => {
+      log('Drop received. Reading file paths...', 'info');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediaForge - Global Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700;900&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed-dim": "#cabeff",
+                      "outline": "#938ea1",
+                      "on-tertiary-fixed": "#002116",
+                      "on-primary": "#32009a",
+                      "on-primary-fixed": "#1c0062",
+                      "tertiary-container": "#0fa47e",
+                      "surface-container-lowest": "#0e0e14",
+                      "surface-dim": "#131319",
+                      "on-primary-container": "#2b0088",
+                      "on-tertiary-container": "#003123",
+                      "on-tertiary-fixed-variant": "#00513c",
+                      "tertiary-fixed": "#7ef9cd",
+                      "secondary-fixed": "#ffd9dd",
+                      "outline-variant": "#484555",
+                      "background": "#131319",
+                      "surface": "#131319",
+                      "on-background": "#e4e1ea",
+                      "on-secondary-fixed": "#400012",
+                      "surface-tint": "#cabeff",
+                      "primary": "#cabeff",
+                      "surface-variant": "#35343b",
+                      "error-container": "#93000a",
+                      "inverse-surface": "#e4e1ea",
+                      "surface-container-high": "#2a2930",
+                      "secondary-container": "#940336",
+                      "primary-container": "#947dff",
+                      "on-error-container": "#ffdad6",
+                      "tertiary": "#60dcb2",
+                      "on-surface": "#e4e1ea",
+                      "on-secondary-container": "#ff9caa",
+                      "inverse-on-surface": "#303036",
+                      "inverse-primary": "#613de0",
+                      "on-surface-variant": "#c9c4d8",
+                      "secondary": "#ffb2bb",
+                      "surface-bright": "#39383f",
+                      "on-secondary": "#670022",
+                      "surface-container": "#1f1f25",
+                      "on-tertiary": "#003829",
+                      "surface-container-highest": "#35343b",
+                      "surface-container-low": "#1b1b21",
+                      "secondary-fixed-dim": "#ffb2bb",
+                      "on-error": "#690005",
+                      "on-primary-fixed-variant": "#4918c8",
+                      "tertiary-fixed-dim": "#60dcb2",
+                      "error": "#ffb4ab",
+                      "on-secondary-fixed-variant": "#910033",
+                      "primary-fixed": "#e6deff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "stack-lg": "48px",
+                      "stack-sm": "12px",
+                      "container-padding": "32px",
+                      "unit": "8px",
+                      "stack-md": "24px"
+              },
+              "fontFamily": {
+                      "label-mono": [
+                              "JetBrains Mono"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "data-display": [
+                              "JetBrains Mono"
+                      ],
+                      "headline-xl": [
+                              "Geist"
+                      ],
+                      "headline-lg": [
+                              "Geist"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Geist"
+                      ]
+              },
+              "fontSize": {
+                      "label-mono": [
+                              "13px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "data-display": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-xl": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+            },
+          }
+        }
+      </script>
+<style>
+        body {
+            background-color: #0e0e14;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(124, 92, 252, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(252, 92, 125, 0.08), transparent 25%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background-color: rgba(27, 27, 33, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 0.5px solid rgba(255, 255, 255, 0.12);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                        0 40px 40px -15px rgba(0,0,0,0.3),
+                        0 4px 4px rgba(0,0,0,0.5);
+        }
+
+        .glass-input {
+            background-color: rgba(19, 19, 25, 0.6);
+            border: 0.5px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.3s ease;
+        }
+
+        .glass-input:focus {
+            border-color: #cabeff;
+            box-shadow: 0 0 4px rgba(202, 190, 255, 0.3);
+            outline: none;
+        }
+
+        /* Custom Toggle Switch */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #60dcb2;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #0fa47e;
+        }
+        .toggle-checkbox {
+            right: 0;
+            z-index: 1;
+            border-color: #e2e8f0;
+            transition: all 0.3s;
+        }
+        .toggle-label {
+            width: 3rem;
+            height: 1.5rem;
+            background-color: #35343b;
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .toggle-checkbox:checked + .toggle-label:after {
+            transform: translateX(1.5rem);
+            background-color: #131319;
+        }
+        .toggle-label:after {
+            content: '';
+            position: absolute;
+            top: 0.125rem;
+            left: 0.125rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            background-color: #c9c4d8;
+            border-radius: 50%;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body class="text-on-surface font-body-md overflow-x-hidden">
+<!-- TopNavBar (Mobile Only) -->
+<nav class="md:hidden bg-surface/30 backdrop-blur-3xl docked full-width top-0 sticky z-50 border-b border-white/10 shadow-[0_-1px_0_rgba(255,255,255,0.1)_inset] shadow-[0_40px_40px_-15px_rgba(0,0,0,0.3),0_4px_4px_rgba(0,0,0,0.5)] flex justify-between items-center px-container-padding py-stack-sm w-full">
+<div class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg font-bold tracking-tighter text-on-surface bg-clip-text">MediaForge</div>
+<div class="flex gap-unit">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-all duration-300">settings</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-all duration-300">help</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-all duration-300">account_circle</span>
+</div>
+</nav>
+<!-- SideNavBar (Desktop Only) -->
+<aside class="hidden md:flex bg-surface-container-low/40 backdrop-blur-2xl h-screen w-64 fixed left-0 top-0 border-r border-white/10 shadow-[20px_0_40px_rgba(0,0,0,0.2)] flex-col h-full py-stack-md gap-stack-sm z-40">
+<div class="px-4 pb-stack-md">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-black text-primary">MediaForge</h1>
+<p class="font-label-mono text-label-mono text-on-surface-variant opacity-70 mt-1">v2.4.0-liquid</p>
+</div>
+<nav class="flex-1 font-label-mono text-label-mono flex flex-col gap-1">
+<a class="text-on-surface-variant hover:bg-white/5 px-4 py-3 flex items-center gap-3 transition-all hover:bg-surface-variant/50 hover:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">graphic_eq</span>
+                Audio
+            </a>
+<a class="text-on-surface-variant hover:bg-white/5 px-4 py-3 flex items-center gap-3 transition-all hover:bg-surface-variant/50 hover:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">movie</span>
+                Video
+            </a>
+<a class="text-on-surface-variant hover:bg-white/5 px-4 py-3 flex items-center gap-3 transition-all hover:bg-surface-variant/50 hover:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">image</span>
+                Image
+            </a>
+<a class="text-on-surface-variant hover:bg-white/5 px-4 py-3 flex items-center gap-3 transition-all hover:bg-surface-variant/50 hover:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">view_list</span>
+                Queue
+            </a>
+</nav>
+<div class="px-4 mt-auto font-label-mono text-label-mono flex flex-col gap-1">
+<a class="bg-primary/20 text-primary border-l-4 border-primary px-4 py-3 flex items-center gap-3 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">terminal</span>
+                FFmpeg Config
+            </a>
+<a class="text-on-surface-variant hover:bg-white/5 px-4 py-3 flex items-center gap-3 transition-all hover:bg-surface-variant/50 hover:translate-x-1 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">help_outline</span>
+                Help
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 p-container-padding min-h-screen flex items-center justify-center">
+<div class="w-full max-w-4xl glass-panel rounded-xl p-container-padding flex flex-col gap-stack-lg relative overflow-hidden">
+<!-- Ambient Card Glow -->
+<div class="absolute -top-32 -right-32 w-96 h-96 bg-tertiary/10 rounded-full blur-3xl pointer-events-none"></div>
+<!-- Header -->
+<header class="border-b border-white/5 pb-stack-md flex justify-between items-end relative z-10">
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">Global Settings</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 max-w-xl">Configure core processing engine paths, hardware utilization, and global UI preferences.</p>
+</div>
+<button class="hidden sm:flex bg-gradient-to-r from-primary-container to-secondary-container hover:from-primary hover:to-secondary text-on-primary-container font-label-mono text-label-mono px-6 py-2 rounded-lg items-center gap-2 transition-all duration-300 shadow-[0_0_15px_rgba(148,125,255,0.3)] hover:shadow-[0_0_25px_rgba(148,125,255,0.5)]">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                    Apply Changes
+                </button>
+</header>
+<!-- Settings Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter relative z-10">
+<!-- System Paths -->
+<section class="flex flex-col gap-stack-md">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">folder_managed</span>
+                        System Paths
+                    </h3>
+<div class="space-y-4">
+<div class="flex flex-col gap-2">
+<label class="font-label-mono text-label-mono text-on-surface-variant">FFmpeg Binary Path</label>
+<div class="flex items-center gap-2">
+<input class="glass-input w-full rounded-lg px-4 py-3 font-data-display text-data-display text-primary-fixed-dim" readonly="" type="text" value="/usr/local/bin/ffmpeg"/>
+<button class="p-3 glass-panel rounded-lg hover:bg-surface-variant/50 transition-colors text-tertiary" title="Browse">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-mono text-label-mono text-on-surface-variant">FFprobe Binary Path</label>
+<div class="flex items-center gap-2">
+<input class="glass-input w-full rounded-lg px-4 py-3 font-data-display text-data-display text-primary-fixed-dim" readonly="" type="text" value="/usr/local/bin/ffprobe"/>
+<button class="p-3 glass-panel rounded-lg hover:bg-surface-variant/50 transition-colors text-tertiary" title="Browse">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-mono text-label-mono text-on-surface-variant">Default Output Directory</label>
+<div class="flex items-center gap-2">
+<input class="glass-input w-full rounded-lg px-4 py-3 font-data-display text-data-display text-primary-fixed-dim" type="text" value="~/Movies/MediaForge_Outputs"/>
+<button class="p-3 glass-panel rounded-lg hover:bg-surface-variant/50 transition-colors text-tertiary" title="Browse">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- FFmpeg Configuration -->
+<section class="flex flex-col gap-stack-md lg:pl-stack-lg lg:border-l border-white/5">
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">memory</span>
+                        Processing &amp; Engine
+                    </h3>
+<div class="space-y-6">
+<!-- HW Accel Toggle -->
+<div class="flex items-center justify-between p-4 glass-panel rounded-lg border border-white/5 bg-surface-container/20">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-semibold">Hardware Acceleration</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant text-xs mt-1">Utilize NVENC/VideoToolbox when available</span>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer opacity-0" id="hw-toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="hw-toggle"></label>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-mono text-label-mono text-on-surface-variant">Global Thread Count</label>
+<select class="glass-input w-full rounded-lg px-4 py-3 font-data-display text-data-display text-on-surface appearance-none bg-surface-container-low">
+<option value="0">Auto (Detect Cores)</option>
+<option value="2">2 Threads</option>
+<option value="4">4 Threads</option>
+<option selected="" value="8">8 Threads</option>
+<option value="16">16 Threads</option>
+</select>
+</div>
+</div>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface flex items-center gap-2 mt-stack-md">
+<span class="material-symbols-outlined text-tertiary">palette</span>
+                        Interface Appearance
+                    </h3>
+<div class="space-y-6">
+<!-- Glass Fidelity Toggle -->
+<div class="flex items-center justify-between p-4 glass-panel rounded-lg border border-white/5 bg-surface-container/20">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-semibold">High Fidelity Glass</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant text-xs mt-1">Enable complex background blur &amp; shadows</span>
+</div>
+<div class="relative inline-block w-12 mr-2 align-middle select-none">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer opacity-0" id="glass-toggle" name="toggle2" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer" for="glass-toggle"></label>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Mobile Action Button -->
+<div class="sm:hidden mt-stack-md relative z-10">
+<button class="w-full flex justify-center bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container font-label-mono text-label-mono px-6 py-3 rounded-lg items-center gap-2 shadow-[0_0_15px_rgba(148,125,255,0.3)]">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                    Apply Changes
+                </button>
+</div>
+</div>
+</main>
+</body></html>
