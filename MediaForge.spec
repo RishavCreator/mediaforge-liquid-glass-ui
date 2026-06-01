@@ -5,7 +5,7 @@ a = Analysis(
     ['mediaforge_liquid.py'],
     pathex=[],
     binaries=[],
-    datas=[('mediaforge_liquid.html', '.')],
+    datas=[('mediaforge_liquid.html', '.'), ('ffmpeg', 'ffmpeg')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
