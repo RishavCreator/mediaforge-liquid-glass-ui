@@ -1,0 +1,5 @@
+# MediaForge Dependencies
+# Install these using: pip install -r requirements.txt
+
+pywebview>=4.0.0
+markitdown
